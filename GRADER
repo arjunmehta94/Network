@@ -1,0 +1,291 @@
+                                     GRADER
+
+Name of student running submit: Kartik Gupta
+Login of student running submit: cs61b-gd
+
+Second team member's name: Abhinav Rai
+Second team member's login: cs61b-aos
+
+Third team member's name : Arjun Mehta 
+Third team member's login: cs61b-cx
+
+IMPORTANT:  Once you've submitted Project 2 once, the same team member should
+submit always.  If a different teammate must submit, inform cs61b@cory.eecs of
+all the details.  Include a complete list of team members, and let us know
+which submission you want graded.
+
+If you've submitted your project once, or even written a substantial amount of
+code together, you may not change partners without the permission of the
+instructor.
+===============================================================================
+Does your program compile without errors?
+Yes
+
+Have you tested your program on the 61B lab machines?
+Yes
+
+Did you successfully implement game tree search?  Did you successfully
+implement alpha-beta pruning?  Are there any limitations on it?  What is the
+default number of search levels set by the one-parameter MachinePlayer
+constructor (or is it a variable-depth search)?
+
+
+Describe your board evaluation function in some detail.
+
+
+Does your MachinePlayer use any special method of choosing the first few moves?
+
+
+Is there anything else the graders should know to help them read your project?
+
+
+
+Describe the classes, modules, and interfaces you designed before and while you
+implemented the project.  Your description should include:
+  -  A list of the classes your program uses.
+  -  A list of each of the "modules" used in or by MachinePlayer, similar to
+     the list in the "Teamwork" section of the README (but hopefully more
+     detailed).  (If you're using a list class, that should probably count as
+     a separate module.)
+  -  For each module, list the class(es) the module is implemented in.
+  -  For each module, say which of your team members implemented it.
+  -  For each module, describe its interface--specifically, the prototype and
+     behavior of each method that is available for external callers (outside
+     the module) to call.  Don't include methods that are only meant to be
+     called from within the module.
+
+     For each method, provide (1) a method prototype and (2) a complete,
+     unambiguous description of the behavior of the method/module.  This
+     description should also appear before the method in your code's comments.
+
+You will probably need to change some of your design decisions as you go; be
+sure to modify this file to reflect these changes before you submit your
+project.  Your design of classes and interfaces will be worth 10% of your
+grade.
+
+MODULE 1: Board & Board Node (Abhinav Rai)
+  
+  CLASSES BOARD & BOARD NODE
+  
+  public class BoardNode -> A Board is made up of BoardNode i.e, every square on the Board is a BoardNode
+    
+    private int color;
+    private int x;
+    private int y;
+    private boolean visit = false;
+    private int dir;
+
+    public BoardNode(int x, int y)
+      creates a BoardNode at position (x,y) of color and direction -1
+
+    public int getDir()
+      returns the direction of the node
+
+    public void setDir(int direction)
+      sets the direction of the node
+
+    public int getColor()
+      returns the color of the node
+    
+    public int getX()
+      returns the X position of the node
+
+    public int getY()
+      returns the Y position of the node
+
+    public void changeColor(int color)
+      changes the color of the node
+
+    public boolean isEmpty()
+      returns true if the node has no color(empty) and false if it has a color
+
+    public boolean getVisit()
+      returns true if the node has veen visited and false if it hasn't
+
+    public void changeVisit(boolean val)
+      changes the visit of the node
+
+    public String printNode()
+      returns the X and Y position as a string
+
+    public String toString(){
+      returns the node as a string
+
+
+  public class Board ->  The main physical Board which is used to keep track of all the moves.
+
+    private BoardNode gameBoard[][];
+    private int numWhite;
+    private int numBlack;
+    
+    public Board()
+      constructs a 8x8 board of type BoardNode 
+    
+    public moveTo(Move obj, int newcolor)
+      updates a board for a particular move
+    
+    public undoMove(Move obj, int newcolor)
+      updates a board for undoing a particular move
+
+    public BoardNode getNode(int x, int y)
+      returns the BoardNode at a particular position
+
+    public String toString()
+      returns the board in the form of a String 
+
+MODULE 2: Valid Moves (Abhinav Rai) -> A list of all Valid Moves, also uses the function isValidMove to check the moves.
+
+  CLASS BOARD
+
+  public class Board
+    
+    public boolean isValidMove(Move obj, int color){
+      returns true if a move is valid and false if it is invalid
+	Unusual Conditions : Assumes that the move passed is an existing move and not Null.
+	//@param obj of type Move
+    	//@param color of type int and is either 0(black) or 1(white)
+ 	//@return true if a move is a valid and false if it is invalid
+
+      HELPERS:
+        public static boolean isGoalNode(BoardNode node)
+        public static boolean isStartingNode(BoardNode node, int color)
+        public static boolean isEndingNode(BoardNode node, int color)
+        public BoardNode[] startingNodes(int color)
+        public boolean isCluster(Move m, int color)
+        public boolean checkCluster(int x, int y, int color)
+
+    public Move[] isValidMoveList(int color)
+	//@param color of type int and is either 0(black) or 1(white)     
+    	//@return a list of all valid moves 
+	Return an Array of Moves which contain all possible valid moves. Uses function is Valid move.
+
+
+MODULE 3: CheckNetwork (Arjun Mehta and Kartik Gupta) -> Checks wether a Board has a network of a particular color.
+
+CLASS NETWORK AND EVALUATOR
+
+  public class Network
+  //contains a set of methods to determine if a network is present on a given board for a given color
+
+     hasValidNetwork determines whether Board "board" has a valid network for "color".
+     Unusual conditions:
+        --> If nodes contain invalid values, do not expect proper behavior     
+     @param board is a Gameboard, an internal representation of the Game.
+     @param color is the color for which network must be determined, black or white.
+     @return true if "color" has a valid Network.
+    public static boolean hasValidNetwork(Board board, int color)
+      returns true if a color on a board has a valid Network, otherwise
+      false
+
+
+    HELPERS: 
+
+      public static BoardNode[] goalNodeFinder(Board board, int color)
+
+
+      public static boolean isNetwork(Board board, BoardNode[] goalNodes)
+        
+
+      public static boolean networkFinder(Board board, BoardNode node, int numNodes, int prevDir)
+       
+
+      public static BoardNode[] getNodeConnections(Board board, BoardNode parent)
+        
+
+      private static boolean BlackGoalConnect(BoardNode goal1, BoardNode goal2)
+        
+
+      private static boolean WhiteGoalConnect(BoardNode goal1, BoardNode goal2)
+        
+
+
+  public class Evaluator
+
+  *** DESCRIBED IN MODULE 5 ***
+
+	
+MODULE 4: MachinePlayer and Minimax (Kartik Gupta) -> Computes the AI computation and gives back the best possible move.
+	
+    CLASS MACHINEPLAYER
+	
+	public class MachinePlayer
+	protected int color;
+ 	protected int searchDepth;
+ 	protected Board gameBoard;
+	protected final static int WHITE = 1;
+	protected final static int BLACK = 0;
+	
+	public MachinePlayer(int color)
+	   constructor #1
+
+	public MachinePlayer(int color, int searchDepth)
+	   constructor #2
+
+	public Move chooseMove()
+	   return a move which is computed by the minimax function
+
+	public Best computeMove(int moveColor, double alpha, double beta, int searchDepth)
+	// computeMove is the minimax function which uses the evaluation function to produce 
+ 	 // a best possible move. 
+ 	 // @param moveColor represents the color of the side who is playing
+ 	 // @param alpha stores the alpha value for minimax
+ 	 // @param beta stores the beta value for minimax
+ 	 // @param searchDepth stores the recursive depth till which the minimax function should taverse
+  	// @return a Best object which holds the best move and the score corresponding it.
+	
+	public boolean opponentMove(Move m)
+	   return a valid move m for the opponent
+
+	public boolean forceMove(Move m)	
+	   return a valid move m for the player
+
+MODULE 5: Evaluation (Arjun Mehta) -> Module focused around evaluating a given board at a given time.
+
+	public class Evaluator
+    //contains a set of methods that determine a score for a given Board.
+    based on number of white connections - number of black connections.
+
+    public static double evalScore(Board board, int color)
+      returns a score for a Board that evaluates based on #white connections - #black connections determined by a color.
+
+    HELPERS:
+
+      public static BoardNode[] nodeFinder(Board board, int color)
+       
+      public static int numConnections(Board board, BoardNode[] nodeArray)
+        
+      public static int connections(Board board, BoardNode node1, BoardNode node2)
+        
+      public static boolean isConnected(Board board, BoardNode node1, BoardNode node2)
+
+      public static boolean isVerticallyAligned(BoardNode node1, BoardNode node2)
+
+      public static boolean isHorizontallyAligned(BoardNode node1, BoardNode node2)
+
+      public static boolean isDiagonallyAligned(BoardNode node1, BoardNode node2)
+
+      public static boolean notBlocked(Board board, BoardNode node1, BoardNode node2)
+
+      public static boolean isDown(BoardNode node1, BoardNode node2)
+
+      public static boolean isUp(BoardNode node1, BoardNode node2)
+
+      public static boolean isRight(BoardNode node1, BoardNode node2)
+
+      public static boolean isLeft(BoardNode node1, BoardNode node2)
+
+      public static boolean isDownRight(BoardNode node1, BoardNode node2)
+
+      public static boolean isUpLeft(BoardNode node1, BoardNode node2)
+
+      public static boolean isDownLeft(BoardNode node1, BoardNode node2)
+
+      public static boolean isUpRight(BoardNode node1, BoardNode node2)
+
+      public static int getDirection(BoardNode node1, BoardNode node2)
+
+
+MODULE 6: List -> Lists used to store data such as Moves etc.
+	Lists used - DList
+	The lists from hw6 have been used in this project. 
+  
