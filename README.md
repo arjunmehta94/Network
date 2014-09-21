@@ -1,7 +1,7 @@
 CS61Bnetwork
 ============
 
-The game of Network
+The game of Network implemented as a project for CS61B.
 
 Network is played on an
 8-by-8 board.  There are two players, "Black" and "White."  Each player has ten
